@@ -1,0 +1,79 @@
+
+<script src= "<?php echo $this->baseUrl() ?>/jq/JQuery%20Source/jquery-1.11.2.js"></script>
+<script src="<?php echo $this->baseUrl() ?>/jq/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<link href="<?php echo $this->baseUrl() ?>/jq/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" />
+<script>
+   // var opt = document.getElementById("opt");
+    $(function () {
+        var startdate;
+        var enddate;
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        //var today_data = yyyy + '-' + mm + '-' +dd ; 
+        var today_data = yy + '-' + mm + '-' + dd;
+        //$('#startDate').val(today_data);
+        $('#startDate').val("Date from");
+        $('#startDate').datepicker({dateFormat: 'yy-mm-dd 00:00:00'});
+        $('#endDate').val("Date to");
+        $('#endDate').datepicker({dateFormat: 'yy-mm-dd 00:00:00'});
+
+        $("#endDate").on("change",function () {
+            startdate = $("#startDate").val();
+            enddate = $("#endDate").val();
+        // alert(startdate +" "+enddate);
+             /////////////////////////// ajax//////////////////////
+        var dataobj = {date:startdate,enddate:enddate};    
+            dataobj = JSON.stringify(dataobj);
+       
+        $.ajax({
+           
+            url: "<?php echo $this->baseUrl() ?>/order/myorders?dataobjx="+dataobj,
+            type: "GET",
+            //data:data,
+            cashe: false,
+            // data: selecteddate,
+            success: function (data) {
+                var returnData = $.parseJSON(data);
+                 $("#opt").empty();
+                 $("#Content").append("<table id='opTable' border='2'><tr><td>Order Date</td><td>Status</td><td>Amount</td><td>Acion</td></tr></table>");
+                                
+                                for (i = 0; i < returnData.length; i++) {
+           $("#opTable").append("<tr><td>" + returnData[i]['order_date'] +
+          "</td><td>" + "Status" + "</td><td id='time'>" + returnData[i]['total_price'] +
+          "</td><td>" + "Action" + "</td></tr>");
+                                  
+                                            }
+                
+
+            },
+            error: function () {
+                alert("Errorvvv");
+            }
+        });
+        //}
+        });
+       
+    });
+
+</script>   
+
+
+<h1>My Orders</h1>   
+<?php
+echo $this->datex; //as form carry obj of forum
+
+?>
+
+<div id="opt">
+    
+</div>
+
+

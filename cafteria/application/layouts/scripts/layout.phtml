@@ -1,0 +1,37 @@
+
+<?php echo $this->doctype() ?>
+
+<html>
+    <head>
+        <?php echo $this->headMeta(); ?>
+        <?php echo $this->headTitle() ?>
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headScript() ?>
+
+        <?php echo $this->jQuery(); ?>
+
+<!--        <script>
+            $(function () {
+
+                alert("hi");
+                $("#element1","#element2").change(function () {
+                    alert("hi");
+                });
+//                $("#element1","#element2").on("change", function () {
+//                    alert("hi");
+//                    dfrom = new Date($("#element1").val());
+//                    dto = new Date($("#element2").val());
+//                    alert("hi" + dfrom + dto);
+//                });
+
+
+            });
+
+        </script> -->
+        
+    </head>
+    <body>
+
+        <?php echo $this->layout()->content; ?>
+
+    </body>
